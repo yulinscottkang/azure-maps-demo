@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Azure Maps Web SDK Samples</title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <link href="https://t-azmaps.azurelbs.com/sdk/javascript/mapcontrol/2/atlas.min.css" rel="stylesheet" />
+        <script src="https://t-azmaps.azurelbs.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+        <style>
+            html,
+            body,
+            #map {
+                height: 100%;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+
+        <script>
+            var map;
+
+            function GetMap() {
+                map = new atlas.Map("map", {
+                    center: [-122.33465194702086, 47.61970264179104],
+                    zoom: 10,
+                    view: "Auto",
+                    authOptions: {
+                        authType: "subscriptionKey",
+                        subscriptionKey: "DCDoRS8v5HQ_nuZs81L-hqvYpzdDRPuyQFyQB1cpfKg"
+                    },
+                    styleSet: 'microsoft-maps:default',
+                    styleAPIVersion: '2022-09-01-preview'
+                });
+
+                map.events.add("ready", function () {
+                    // map.setTraffic({ flow: "absolute" });
+                    // map.setTraffic({ incidents: true });
+                    map.controls.add(
+                        [
+                            new atlas.control.ZoomControl(),
+                            new atlas.control.PitchControl(),
+                            new atlas.control.CompassControl(),
+                            new atlas.control.StyleControl({
+                                mapStyles: "all"
+                            })
+                        ],
+                        {
+                            position: "top-right"
+                        }
+                    );
+                });
+            }
+        </script>
+    </head>
+    <body onload="GetMap()">
+        <div id="map"></div>
+    </body>
+</html>
