@@ -1,0 +1,57 @@
+
+<HTML><HEAD>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <style>html, body, table { width: 100%; height: 100%; padding: 0; margin: 0;} #myMap {width: 100%; height: 100%; } </style>
+    <!-- Add references to JQuery. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css">
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+    <!-- Add a reference to the Azure Maps Services Module JavaScript file. -->
+    <script src="https://atlas.microsoft.com/sdk/javascript/service/2/atlas-service.min.js"></script>
+    <script type="text/javascript">
+    function GetMap(){
+    var map = new atlas.Map('myMap', {
+     view: 'Auto',
+     authOptions: {
+     authType: 'subscriptionKey',
+     subscriptionKey: 'i7HBtFqWQJv0jsSajinF9z8ADNj5k8U3kqgTKpjmsYI'
+     }
+    });
+    map.setStyle({renderWorldCopies: true, showBuildingModels: true, showFeedbackLink: false, showLogo: true});
+    map.events.add('ready', function () {
+     var dataSource = new atlas.source.DataSource();
+     map.sources.add(dataSource);
+     map.layers.add(new atlas.layer.LineLayer(dataSource, null, {strokeColor: 'blue',strokeWidth: 5}));
+     $.getJSON('https://kevinsayazstorage.blob.core.windows.net/maps/error.json', function(data) {
+     var latMin = data[0].latitude;
+     var latMax = data[0].latitude;
+     var lonMin = data[0].longititude;
+     var lonMax = data[0].longititude;
+     var counter = 0;
+      for (var i = 1; i < data.length; i++) {
+        if (data[i].longititude > lonMax) { lonMax = data[i].longititude; }
+        if (data[i].longititude < lonMin) { lonMin = data[i].longititude; }
+        if (data[i].latitude > latMax) { latMax = data[i].latitude; }
+        if (data[i].latitude < latMin) { latMin = data[i].latitude; }
+        if (counter % 4 ) 
+        {
+          var marker = new atlas.HtmlMarker({color: 'blue', text: data[i].groundSpeedMPH, position: [data[i].longititude, data[i].latitude]});
+          map.markers.add(marker);
+        }
+        dataSource.add(new atlas.data.LineString([[data[i-1].longititude,data[i-1].latitude], [data[i].longititude,data[i].latitude]]));
+        counter = counter + 1;
+      }
+      //console.log(lonMin, latMin, lonMax, latMax);
+      var marker = new atlas.HtmlMarker({color: 'green', text: 'go', position: [data[0].longititude, data[0].latitude]});
+      map.markers.add(marker);
+      var marker = new atlas.HtmlMarker({color: 'red', text: 'end', position: [data[counter].longititude, data[counter].latitude]});
+      map.markers.add(marker);
+      map.setCamera({ bounds: [lonMin, latMin, lonMax, latMax], padding: 20});
+      });
+     });
+    }
+    </script>
+</HEAD><BODY onload="GetMap()"><TABLE align="center"><div id="myMap"></div></TABLE></BODY></HTML>
+    
+ 
