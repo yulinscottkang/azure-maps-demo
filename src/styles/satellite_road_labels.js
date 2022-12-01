@@ -1,5 +1,5 @@
 // https://ecn.api.m2.tiles.live-int.com/comp/stl?ods=mvt&mbxs=7443EAC9-CD76-4236-B027-22DBC504BF06&v=9.03&layers=ro&og=1674&mkt=en-US&ur=us&stlhost=int2
-var style_satellite = {
+var style_satellite_road_labels = {
 	"version": 8,
 	"name": "Photoreal Bing",
 	"center": [-122.336, 47.607],
