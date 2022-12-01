@@ -8,11 +8,16 @@
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Bing / AZM Side-by-side test</title>
 
-    <!-- <link rel="stylesheet" href="https://talbsmapcontrol.blob.core.windows.net/javascript/mapcontrol/2.1/atlas.min.css" type="text/css" />
-    <script src="https://talbsmapcontrol.blob.core.windows.net/javascript/mapcontrol/2.1/atlas.min.js"></script> -->
+    <link href="https://t-azmaps.azurelbs.com/sdk/javascript/mapcontrol/3.0/atlas.min.css" rel="stylesheet" />
+    <script src="https://t-azmaps.azurelbs.com/sdk/javascript/mapcontrol/3.0/atlas.min.js"></script>
 
-    <link href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" rel="stylesheet" />
-    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+    <script src="styles/road.js"></script>
+    <script src="styles/night.js"></script>
+    <script src="styles/satellite.js"></script>
+    <script src="styles/grayscale_dark.js"></script>
+    <script src="styles/grayscale_light.js"></script>
+    <script src="styles/high_contrast_dark.js"></script>
+    <script src="styles/high_contrast_light.js"></script>
 
     <style>
         .fill-space {
@@ -76,10 +81,8 @@
     <script>
         // Subscription key
         // const subscriptionKey = "DCDoRS8v5HQ_nuZs81L-hqvYpzdDRPuyQFyQB1cpfKg";
-        const subscriptionKey = "_iCg1nyPYBVv3Vpynd1PvTkBsOG5LpZBeVq8qP-ve9Q";
-
-        // Azure Maps domain
-        const domain = "https://t-azmaps.azurelbs.com";
+        const subscriptionKey1 = "C5O1IevWN8bALJ-WVv9P_VVAawpIDDBJbd2KUdu5lic"; // Bing
+        const subscriptionKey2 = "DCDoRS8v5HQ_nuZs81L-hqvYpzdDRPuyQFyQB1cpfKg"; // Azure Maps
 
     </script>
 
@@ -133,15 +136,6 @@
                 "mapStyleId": "DCD31B1C-B637-4B36-8635-829DF5E46999",
                 "url": `https://ecn.api.m2.tiles.live-int.com/comp/stl?ods=mvt&mbxs=DCD31B1C-B637-4B36-8635-829DF5E46999&v=${version}&layers=d,b,ro&og=1674&mkt=en-US&ur=us&stlhost=int2`
             }, {
-                "name": "Terra",
-                "styleKey": "r",
-                "copyrightImageryId": "RoadOnDemand",
-                "thumbnail": "https://atlas.microsoft.com/styling/styles/road_shaded_relief/thumbnail.png?api-version=2.0",
-                "theme": "light",
-                "mapStyleId": "33B050CC-BA4E-4350-A5B7-4171AEC234A2",
-                "url": `https://ecn.api.m2.tiles.live-int.com/comp/stl?ods=mvt&mbxs=33B050CC-BA4E-4350-A5B7-4171AEC234A2&v=${version}&layers=h,d,b,ro&og=1674&mkt=en-US&ur=us&stlhost=int2`
-            },
-             {
                 "name": "High Contrast Dark",
                 "styleKey": "r",
                 "copyrightImageryId": "RoadOnDemand",
@@ -219,11 +213,30 @@
             center: [-122.335, 47.62],
             authOptions: {
                 authType: "subscriptionKey",
-                subscriptionKey: subscriptionKey
+                subscriptionKey: subscriptionKey1
             },
             transformRequest: (url, resourceType) => {
-                if(resourceType === 'Tile' && /^http:\/\//.test(url)) {
+                if (resourceType === 'Tile' && /^http:\/\//.test(url)) {
                     return { url: url.replace('http://', 'https://') };
+                } else if (resourceType === 'Style'){
+                    let style = style_road;
+                    if(url.startsWith(styleSet.styles[0].url)){
+                        style = style_road;
+                    } else if(url.startsWith(styleSet.styles[1].url)){
+                        style = style_night;
+                    } else if(url.startsWith(styleSet.styles[2].url)){
+                        style = style_satellite;
+                    } else if(url.startsWith(styleSet.styles[3].url)){
+                        style = style_grayscale_dark;; 
+                    } else if(url.startsWith(styleSet.styles[4].url)){
+                        style = style_grayscale_light;
+                    } else if(url.startsWith(styleSet.styles[5].url)) {
+                        style = style_high_contrast_dark;
+                    } else if(url.startsWith(styleSet.styles[6].url)){
+                        style = style_high_contrast_light;
+                    }
+
+                    return { url: URL.createObjectURL(new Blob([JSON.stringify(style)], {type: "application/json"})) }
                 } else {
                     return { url }
                 }
@@ -240,7 +253,7 @@
             center: [-122.335, 47.62],
             authOptions: {
                 authType: "subscriptionKey",
-                subscriptionKey: subscriptionKey
+                subscriptionKey: subscriptionKey2
             },
             style: 'road'
         });
