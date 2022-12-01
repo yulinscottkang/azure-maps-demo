@@ -6,14 +6,20 @@ var style_high_contrast_light = {
 	"sources": {
 		"bing-mvt": {
 			"type": "vector",
-			"tiles": ["https://ecn.api.m2.tiles.live-int.com/comp/ch/{z}-{x}-{y}.mvt?mkt=en-us&it=G,LC,L,LA&og=1122&src=t&js=1&tj=1&ur=us&cstl=hcl&mvt=1&features=mvt,mvtfontinfo&sv=9.03"],
-			"promoteId": "id",
-			"minzoom": 0,
-			"maxzoom": 18
+			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.base&cstl=hcl&sv=9.03&og=1122"
+			// "tiles": ["https://ecn.api.m2.tiles.live-int.com/comp/ch/{z}-{x}-{y}.mvt?mkt=en-us&it=G,LC,L,LA&og=1122&src=t&js=1&tj=1&ur=us&cstl=hcl&mvt=1&features=mvt,mvtfontinfo&sv=9.03"],
+			// "promoteId": "id",
+			// "minzoom": 0,
+			// "maxzoom": 18
 		},
 		"bing-traffic": {
 			"type": "vector",
 			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.traffic.relative"
+			// "tiles": [
+			// 	"https://trafficrenderer.tiles.virtualearth.net/comp/ch/{quadkey}?it=Z,TF&src=t&cstl=hcl&mvt=1"
+			// ],
+			// "minzoom": 6,
+			// "maxzoom": 20
 		},
 		"roadDetails": {
 			"type": "raster",
