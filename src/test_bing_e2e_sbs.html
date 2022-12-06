@@ -218,7 +218,14 @@
             transformRequest: (url, resourceType) => {
                 if (resourceType === 'Tile' && /^http:\/\//.test(url)) {
                     return { url: url.replace('http://', 'https://') };
-                } else if (resourceType === 'Style'){
+                }
+
+                if (resourceType === 'Tile') {
+                    // Append bing=1 to the end of the URL to avoid cache conflict with map2.
+                    return { url: url + '&bing=1' };
+                }
+
+                if (resourceType === 'Style') {
                     let style = style_road;
                     if(url.startsWith(styleSet.styles[0].url)){
                         style = style_road;

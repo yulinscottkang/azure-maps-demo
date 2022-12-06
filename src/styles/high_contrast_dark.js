@@ -38,7 +38,8 @@ var style_high_contrast_dark = {
 		},
 		"JK": {
 			"type": "raster",
-			"tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=ro&shading=t&og=1674&cstl=VB&n=t"],
+			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.core.raster.highcontrastdark",
+			// "tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=ro&shading=t&og=1674&cstl=VB&n=t"],
 			"minzoom": 5,
 			"maxzoom": 20,
 			"tileSize": 256,
