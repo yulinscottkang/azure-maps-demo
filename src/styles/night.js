@@ -24,17 +24,19 @@ var style_night = {
 		},
 		"roadDetails": {
 			"type": "raster",
-			"tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=g&og=1674&cstl=vbd&stl=d"],
-			"minzoom": 5,
-			"maxzoom": 13,
-			"tileSize": 256
+			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.core.raster.roaddetail&cstl=vbd",
+			// "tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=g&og=1674&cstl=vbd&stl=d"],
+			// "minzoom": 5,
+			// "maxzoom": 13,
+			// "tileSize": 256
 		},
 		"buildings": {
 			"type": "raster",
-			"tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=z,bf&og=1674&cstl=vbd&n=t"],
-			"minzoom": 16,
-			"maxzoom": 20,
-			"tileSize": 256
+			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.core.raster.buildingfootprint&cstl=vbd",
+			// "tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=z,bf&og=1674&cstl=vbd&n=t"],
+			// "minzoom": 16,
+			// "maxzoom": 20,
+			// "tileSize": 256
 		},
 		"JK": {
 			"type": "raster",

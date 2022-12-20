@@ -215,6 +215,7 @@
                 authType: "subscriptionKey",
                 subscriptionKey: subscriptionKey1
             },
+            styleDefinitionsVersion: "2023-01-01",
             transformRequest: (url, resourceType) => {
                 if (resourceType === 'Tile' && /^http:\/\//.test(url)) {
                     return { url: url.replace('http://', 'https://') };
@@ -262,6 +263,7 @@
                 authType: "subscriptionKey",
                 subscriptionKey: subscriptionKey2
             },
+            styleDefinitionsVersion: "2022-08-05",
             style: 'road'
         });
 
