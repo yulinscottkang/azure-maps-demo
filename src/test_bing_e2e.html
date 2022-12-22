@@ -109,6 +109,7 @@
                 </td>
             </tr>
         </table>
+        <div id="map-info"></div>
     </div>
 
     <script>
@@ -202,14 +203,20 @@
         map1.events.add('pitchend', () => updateState())
         map1.events.add('zoomend', () => updateState())
 
+        map2.events.add('dragend', () => updateState())
+        map2.events.add('pitchend', () => updateState())
+        map2.events.add('zoomend', () => updateState())
+
         const updateState = () => {
+            var camera = map1.getCamera();
             window.history.pushState('', 'Azure Maps Playground',
-                `?lng=${map1.getCamera().center[0]}` +
-                `&lat=${map1.getCamera().center[1]}` +
-                `&pitch=${map1.getCamera().pitch}` +
-                `&bearing=${map1.getCamera().bearing}` +
-                `&zoom=${map1.getCamera().zoom}`
+                `?lng=${camera.center[0]}` +
+                `&lat=${camera.center[1]}` +
+                `&pitch=${camera.pitch}` +
+                `&bearing=${camera.bearing}` +
+                `&zoom=${camera.zoom}`
             )
+            document.getElementById('map-info').innerText = `Zoom: ${camera.zoom.toFixed(1)} / Lat: ${camera.center[1].toFixed(5)} / Lng: ${camera.center[0].toFixed(5)} / Pitch: ${camera.pitch.toFixed(1)} / Bearing: ${camera.bearing.toFixed(1)}`;
         }
 
         // Add zoom control to both maps.
