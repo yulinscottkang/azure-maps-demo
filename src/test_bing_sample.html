@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bing / AZM Sample test</title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <link href="https://t-azmaps.azurelbs.com/sdk/javascript/mapcontrol/2/atlas.min.css" rel="stylesheet" />
+        <script src="https://t-azmaps.azurelbs.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+        <style>
+            html,
+            body,
+            #map {
+                height: 100%;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+
+        <script>
+            var map;
+
+            function GetMap() {
+                map = new atlas.Map("map", {
+                    zoom: 12,
+                    center: [-122.335, 47.62],
+                    authOptions: {
+                        authType: "subscriptionKey",
+                        subscriptionKey: "C5O1IevWN8bALJ-WVv9P_VVAawpIDDBJbd2KUdu5lic"
+                    },
+                    styleDefinitionsVersion: "2023-01-01",
+                    transformRequest: (url, resourceType) => {
+                        if (resourceType === 'Tile') {
+                            // Append bing=1 to the end of the URL to avoid browser cache conflict with azure maps.
+                            return { url: url + '&bing=1' };
+                        }
+                        return { url };
+                    }
+                });
+
+                map.controls.add(new atlas.control.StyleControl({ mapStyles: 'all' }), { position: "top-right" });
+                map.controls.add(new atlas.control.TrafficControl(), { position: 'top-right' });
+            }
+        </script>
+    </head>
+    <body onload="GetMap()">
+        <div id="map"></div>
+    </body>
+</html>

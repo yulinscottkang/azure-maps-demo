@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Azure Maps Web SDK Samples</title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- <link href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" rel="stylesheet" />
+        <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script> -->
+
+        <link href="../../Azure-IoT-Maps-WebSDK/src/Map/dist/3.0/atlas.min.css" rel="stylesheet" />
+        <script src="../../Azure-IoT-Maps-WebSDK/src/Map/dist/3.0/atlas.min.js"></script>
+
+
+        <style>
+            html,
+            body,
+            #map {
+                height: 100%;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+
+        <script>
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJqdGkiOiI1MDY1Mjk3NC1hMjVmLTllYWUtNmYyMy0yNzcyNDIzOTQ1ZjkiLCJtYXhSYXRlUGVyU2Vjb25kIjoiNTAwIiwib2lkIjoiMGVmZWRjZDEtZWQ0Ni00ZjUyLWFmZTAtOTc4NWI2MzNlZjNiIiwicmVnaW9ucyI6IltcIm5vcnRoZXVyb3BlXCIsXCJ3ZXN0ZXVyb3BlXCIsXCJ3ZXN0Y2VudHJhbHVzXCIsXCJ3ZXN0dXMyXCIsXCJlYXN0dXNcIl0iLCJuYmYiOjE2NTkyODMyMDAsImV4cCI6MTY3MjUwMjM5OSwiaWF0IjoxNjU5NDMwMTg1LCJpc3MiOiI2YjYwM2U1Mi1hMGRlLTQxZGYtYmZhMi00NjRlMjYyZmE5ODQiLCJhdWQiOiIvc3Vic2NyaXB0aW9ucy9lYzMxYWE3NC0zNDUzLTQyNGQtOWYzNy0wZDc2MDAyYWEwYmQvcmVzb3VyY2VHcm91cHMvYXp1cmUtbWFwcy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hcHMvYWNjb3VudHMvZGV2In0.nsZEeg6_vHwr3TK8M30Ua_q0jh8NstwYAaJKM3I2Pjg"
+            var map;
+
+            function GetMap() {
+                map = new atlas.Map("map", {
+                    zoom: 12,
+                    center: [-122.335, 47.62],
+                    view: "Auto",
+                    domain: "atlas.microsoft.com",
+                    authOptions: {
+                        authType: "sas",
+                        getToken: function (resolve, reject, map) {
+                            resolve(token);
+                        }
+                }
+                    // authOptions: {
+                    //     authType: "subscriptionKey",
+                    //     subscriptionKey: "DCDoRS8v5HQ_nuZs81L-hqvYpzdDRPuyQFyQB1cpfKg"
+                    //     // subscriptionKey: "_iCg1nyPYBVv3Vpynd1PvTkBsOG5LpZBeVq8qP-ve9Q"
+                    // }
+                });
+
+                map.controls.add(new atlas.control.TrafficControl(), { position: 'top-right' });
+            }
+        </script>
+    </head>
+    <body onload="GetMap()">
+        <div id="map"></div>
+    </body>
+</html>
