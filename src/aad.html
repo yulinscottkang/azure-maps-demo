@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Map</title>
+
+    <link rel="stylesheet" href="http://127.0.0.1:8080/src/Map/dist/3.0/atlas.min.css" type="text/css" />
+    <script src="http://127.0.0.1:8080/src/Map/dist/3.0/atlas.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css" />
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.js" ></script> -->
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        iframe {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var map = new atlas.Map("map", {
+            domain: "atlas.microsoft.com",
+            center: [-122.33, 47.64],
+            zoom: 12,
+            language: "en-US",
+            authOptions: {
+                authType: "aad",
+                clientId: "6b603e52-a0de-41df-bfa2-464e262fa984",
+                aadAppId: "761aa8c0-ab72-4dfe-8f47-8bd0718acae6",
+                aadTenant: "5122b9e0-9741-49fe-8990-94c45441f85d",
+                aadInstance: "https://login.microsoftonline.com/"
+            }
+        });
+
+        map.events.add("tokenacquired", function (e) {
+            console.log("AAD token acquired", e);
+        });
+    </script>
+</body>
+
+</html>
