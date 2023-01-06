@@ -1,4 +1,4 @@
-// https://ecn.api.m2.tiles.live-int.com/comp/stl?ods=mvt&mbxs=7443EAC9-CD76-4236-B027-22DBC504BF06&v=9.03&og=1674&mkt=en-US&ur=us&stlhost=int2
+// https://ecn.api.m2.tiles.live-int.com/comp/stl?ods=mvt&mbxs=7443EAC9-CD76-4236-B027-22DBC504BF06&v=9.03&layers=ro&og=1674&mkt=en-US&ur=us&stlhost=int2
 var style_satellite_road_labels = {
 	"version": 8,
 	"name": "Photoreal Bing",
@@ -27,6 +27,20 @@ var style_satellite_road_labels = {
 			"tileSize": 256,
 			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.imagery"
 			// "tiles": ["http://t0.tiles.virtualearth.net/tiles/a{quadkey}.jpeg?g=0"]
+		},
+		"JK": {
+			"type": "raster",
+			"url": "https://{{azMapsDomain}}/map/tileset?api-version=2.1&language={{azMapsLanguage}}&view={{azMapsView}}&tilesetId=microsoft.base.hybrid.road",
+			// "tiles": ["https://ecn.dynamic.t0.m2.tiles.live-int.com/comp/ch/{quadkey}?mkt=en-US&it=ro&shading=t&og=1674&cstl=VB&n=t"],
+			"minzoom": 5,
+			"maxzoom": 20,
+			"tileSize": 256,
+			"bounds": [
+				122.74,
+				19.33,
+				149,
+				45.67
+			]
 		}
 	},
 	"sprite": "https://ecn.api.m2.tiles.live-int.com/comp/stl/sprite?ods=mvt&mbxs=7443eac9-cd76-4236-b027-22dbc504bf06&v=9.03&og=1674&mkt=en-US",
@@ -1349,6 +1363,14 @@ var style_satellite_road_labels = {
 				["literal", [6.0, 10.0]], 12, ["literal", [3.0, 5.0]], 22, ["literal", [4.0, 6.66666651]]
 			]
 		}
+	}, {
+		"id": "microsoft.bing.maps.JK.JK",
+		"type": "raster",
+		"paint": {
+		"raster-fade-duration": 100
+		},
+		"source": "JK",
+		"minzoom": 4
 	}, {
 		"id": "microsoft.bing.maps.traffic_relative.traffic_congestion_closed_line",
 		"source": "bing-traffic",
