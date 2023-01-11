@@ -92,6 +92,46 @@
                     <select id="view1">
                     </select>
                 </label>
+                <label>
+                    Language:
+                    <select id="lang" onchange="langChange(this.value)">
+                        <option value="ar-SA">Arabic</option>
+                        <option value="bg-BG">Bulgarian</option>
+                        <option value="zh-Hans-CN">Chinese (Simplified - China)</option>
+                        <option value="zh-Hant-TW">Chinese (Traditional - Taiwan)</option>
+                        <option value="cs-CZ">Czech</option>
+                        <option value="da-DK">Danish</option>
+                        <option value="nl-NL">Dutch</option>
+                        <option value="en">English</option>
+                        <option value="en-AU">English (Australia)</option>
+                        <option value="en-GB">English (UK)</option>
+                        <option value="en-NZ">English (New Zealand)</option>
+                        <option value="fi-FI">Finnish</option>
+                        <option value="fr-FR">French</option>
+                        <option value="de-DE">German</option>
+                        <option value="el-GR">Greek</option>
+                        <option value="hu-HU">Hungarian</option>
+                        <option value="id-ID">Indonesian</option>
+                        <option value="it-IT">Italian</option>
+                        <option value="ko-KR">Korean</option>
+                        <option value="lt-LT">Lithuanian</option>
+                        <option value="ms-MY">Malay</option>
+                        <option value="NGT">Neutral Ground Truth</option>
+                        <option value="NGT-Latn">Neutral Ground Truth (Latin)</option>
+                        <option value="nb-NO">Norwegian</option>
+                        <option value="pl-PL">Polish</option>
+                        <option value="pt-BR">Portuguese (Brazil)</option>
+                        <option value="pt-PT">Portuguese (Portugal)</option>
+                        <option value="ru-RU">Russian</option>
+                        <option value="sk-SK">Slovak</option>
+                        <option value="sl-SI">Slovenian</option>
+                        <option value="es-ES">Spanish (Castilian)</option>
+                        <option value="es-MX">Spanish (Mexico)</option>
+                        <option value="sv-SE">Swedish</option>
+                        <option value="th-TH">Thai</option>
+                        <option value="tr-TR">Turkish</option>
+                    </select>
+                </label>
             </div>
         </div>
 
@@ -116,6 +156,10 @@
         // Mirroring locks
         let lockCamera = false, lockPopup = false;
 
+        // Language to use for the map.
+        var language = new URLSearchParams(window.location.search).get("lang") || 'NGT';
+        document.getElementById('lang').value = language;
+
         // HTML elements
         const view1 = document.getElementById("view1");
         const options = countries.map(country => {
@@ -137,6 +181,7 @@
         const map1 = new atlas.Map("map1", {
             zoom: 12,
             center: [-122.335, 47.62],
+            language,
             authOptions: {
                 authType: "subscriptionKey",
                 subscriptionKey: subscriptionKey1
@@ -154,6 +199,7 @@
         const map2 = new atlas.Map("map2", {
             zoom: 12,
             center: [-122.335, 47.62],
+            language,
             authOptions: {
                 authType: "subscriptionKey",
                 subscriptionKey: subscriptionKey2
@@ -209,12 +255,14 @@
 
         const updateState = () => {
             var camera = map1.getCamera();
+            var lang = map1.getStyle().language;
             window.history.pushState('', 'Azure Maps Playground',
                 `?lng=${camera.center[0]}` +
                 `&lat=${camera.center[1]}` +
                 `&pitch=${camera.pitch}` +
                 `&bearing=${camera.bearing}` +
-                `&zoom=${camera.zoom}`
+                `&zoom=${camera.zoom}` +
+                `&lang=${lang}`
             )
             document.getElementById('map-info').innerText = `Zoom: ${camera.zoom.toFixed(1)} / Lat: ${camera.center[1].toFixed(5)} / Lng: ${camera.center[0].toFixed(5)} / Pitch: ${camera.pitch.toFixed(1)} / Bearing: ${camera.bearing.toFixed(1)}`;
         }
@@ -257,8 +305,10 @@
         }
 
         // Language change callback.
-        function langChange(map, lang) {
-            map.setStyle({ language: lang });
+        function langChange(value) {
+            map1.setStyle({ language: value });
+            map2.setStyle({ language: value });
+            updateState();
         }
 
         let showBusinessPOI = true;
